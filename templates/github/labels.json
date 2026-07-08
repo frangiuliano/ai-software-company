@@ -1,0 +1,92 @@
+[
+  {
+    "name": "order-01",
+    "color": "0E8A16",
+    "description": "Execution order: 1st issue to implement"
+  },
+  {
+    "name": "order-02",
+    "color": "0E8A16",
+    "description": "Execution order: 2nd issue to implement"
+  },
+  {
+    "name": "order-03",
+    "color": "0E8A16",
+    "description": "Execution order: 3rd issue to implement"
+  },
+  {
+    "name": "order-04",
+    "color": "0E8A16",
+    "description": "Execution order: 4th issue to implement"
+  },
+  {
+    "name": "order-05",
+    "color": "0E8A16",
+    "description": "Execution order: 5th issue to implement"
+  },
+  {
+    "name": "order-06",
+    "color": "0E8A16",
+    "description": "Execution order: 6th issue to implement"
+  },
+  {
+    "name": "order-07",
+    "color": "0E8A16",
+    "description": "Execution order: 7th issue to implement"
+  },
+  {
+    "name": "order-08",
+    "color": "0E8A16",
+    "description": "Execution order: 8th issue to implement"
+  },
+  {
+    "name": "order-09",
+    "color": "0E8A16",
+    "description": "Execution order: 9th issue to implement"
+  },
+  {
+    "name": "order-10",
+    "color": "0E8A16",
+    "description": "Execution order: 10th issue to implement"
+  },
+  {
+    "name": "status:ready",
+    "color": "1D76DB",
+    "description": "Dependencies met, available to pick up"
+  },
+  {
+    "name": "status:in-progress",
+    "color": "FBCA04",
+    "description": "Currently being implemented"
+  },
+  {
+    "name": "status:blocked",
+    "color": "D93F0B",
+    "description": "Waiting on another issue to close"
+  },
+  {
+    "name": "type:foundation",
+    "color": "5319E7",
+    "description": "Project setup, infrastructure, database"
+  },
+  {
+    "name": "type:feature",
+    "color": "1D76DB",
+    "description": "Product functionality"
+  },
+  {
+    "name": "type:bug",
+    "color": "B60205",
+    "description": "Bug fix"
+  },
+  {
+    "name": "type:chore",
+    "color": "C5DEF5",
+    "description": "Maintenance, tooling, dependencies"
+  },
+  {
+    "name": "scope:mvp",
+    "color": "006B75",
+    "description": "Minimum viable product phase"
+  }
+]

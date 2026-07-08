@@ -95,9 +95,13 @@ Secciones requeridas:
 
 | Qué                          | Dónde                                          |
 |------------------------------|------------------------------------------------|
-| Convenciones (este archivo)  | `ai-software-company/standards/git-workflow.md` |
+| Convenciones git (este archivo) | `ai-software-company/standards/git-workflow.md` |
+| Convenciones de Issues y labels | `ai-software-company/standards/issue-workflow.md` |
 | PR template                  | `<product-repo>/.github/PULL_REQUEST_TEMPLATE.md` |
+| Extensiones de workflow por proyecto | `<product-repo>/.github/ISSUE_WORKFLOW.md` |
 | Prompt del Developer Agent   | `ai-software-company/agents/developer/prompt.md` |
+| Prompt del Product Owner Agent | `ai-software-company/agents/product-owner/prompt.md` |
 
-El PR template debe replicarse en cada repo de producto porque GitHub solo lo
-lee desde `.github/` del repo donde se abre el PR.
+El PR template y el issue workflow por proyecto deben replicarse en cada repo
+de producto. GitHub solo lee el PR template desde `.github/` del repo donde
+se abre el PR.

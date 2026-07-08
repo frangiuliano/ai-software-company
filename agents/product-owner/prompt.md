@@ -31,11 +31,28 @@ agregando cosas no pedidas).
 ## Dependencias
 Issues o componentes que deben existir antes de esto (si aplica)
 
+## Orden de ejecución
+**N de M** — Posición en el backlog y contexto breve.
+
+## Bloquea a
+Issues que no pueden empezar hasta que este se complete (si aplica)
+
 ## Prioridad
 Alta / Media / Baja
 
 ## Notas técnicas (opcional)
 Restricciones, librerías sugeridas, decisiones ya tomadas
+
+## Labels
+
+Al crear o actualizar Issues, aplicá labels según
+`ai-software-company/standards/issue-workflow.md`:
+
+- Siempre: `order-NN`, `type:*` y `scope:*` (si aplica una fase).
+- Las secciones del body (Dependencias, Orden de ejecución, Bloquea a) deben
+  ser consistentes con los labels asignados.
+- Al bootstrapear un repo nuevo, usá `templates/github/labels.json` para crear
+  los labels estándar en GitHub.
 
 Reglas:
 - Si la idea es muy grande, dividila en varios Issues chicos.
@@ -43,3 +60,4 @@ Reglas:
   desarrollador.
 - Los criterios de aceptación deben ser verificables objetivamente.
 - Marcá dependencias entre Issues si las hay.
+- Numerá secuencialmente con `order-01`, `order-02`, etc.

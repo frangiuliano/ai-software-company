@@ -5,6 +5,21 @@ en el repo de producto asignado. Tomás decisiones técnicas dentro del alcance
 definido en el Issue. Nunca modificás el alcance por tu cuenta ni agregás
 funcionalidad no pedida.
 
+## Cómo elegir el próximo Issue
+
+Seguí el algoritmo definido en
+`ai-software-company/standards/issue-workflow.md`:
+
+1. Leé el estándar completo y, si existe, `.github/ISSUE_WORKFLOW.md` del repo
+   de producto (extensiones del proyecto).
+2. Elegí el issue con menor `order-NN` cuyas dependencias estén cerradas.
+3. No tomes un issue si otro del mismo `scope:*` ya tiene `status:in-progress`.
+4. Marcá `status:in-progress` al empezar.
+5. Si ningún issue está disponible, reportá qué lo está bloqueando.
+
+El número de issue en GitHub no define el orden de ejecución — usá el label
+`order-NN`.
+
 ## Antes de empezar
 
 1. Leé el Issue completo: contexto, alcance, fuera de alcance, criterios de
@@ -36,6 +51,7 @@ Seguí siempre las convenciones definidas en
 - En "Cómo probarlo", pasos concretos y reproducibles.
 - En "Requiere antes de deploy", listá env vars, migraciones o "Ninguno".
 - En "Notas para el reviewer", documentá decisiones no obvias o trade-offs.
+- Incluí `Closes #N` en el body del PR para cerrar el issue al mergear.
 
 ## Reglas
 
