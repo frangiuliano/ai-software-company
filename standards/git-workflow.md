@@ -93,14 +93,17 @@ Secciones requeridas:
 
 ## Dónde vive cada cosa
 
-| Qué                          | Dónde                                          |
-|------------------------------|------------------------------------------------|
+| Qué | Dónde |
+|-----|-------|
 | Convenciones git (este archivo) | `ai-software-company/standards/git-workflow.md` |
 | Convenciones de Issues y labels | `ai-software-company/standards/issue-workflow.md` |
-| PR template                  | `<product-repo>/.github/PULL_REQUEST_TEMPLATE.md` |
+| Flujo de agentes | `ai-software-company/standards/agent-workflow.md` |
+| Seguridad | `ai-software-company/standards/security-standards.md` |
+| Testing y CI | `ai-software-company/standards/testing-standards.md` |
+| Arquitectura | `ai-software-company/standards/architecture-standards.md` |
+| PR template | `<product-repo>/.github/PULL_REQUEST_TEMPLATE.md` |
 | Extensiones de workflow por proyecto | `<product-repo>/.github/ISSUE_WORKFLOW.md` |
-| Prompt del Developer Agent   | `ai-software-company/agents/developer/prompt.md` |
-| Prompt del Product Owner Agent | `ai-software-company/agents/product-owner/prompt.md` |
+| Prompts de agentes | `ai-software-company/agents/<rol>/prompt.md` |
 
 El PR template y el issue workflow por proyecto deben replicarse en cada repo
 de producto. GitHub solo lee el PR template desde `.github/` del repo donde

@@ -117,6 +117,8 @@ done < <(jq -c '.[]' templates/github/labels.json)
 | Qué | Dónde |
 |-----|-------|
 | Contrato de labels y algoritmos (este archivo) | `ai-software-company/standards/issue-workflow.md` |
+| Flujo de agentes y triggers | `ai-software-company/standards/agent-workflow.md` |
+| Seguridad, testing, arquitectura | `ai-software-company/standards/*-standards.md` |
 | Template de labels para bootstrap | `ai-software-company/templates/github/labels.json` |
 | Extensiones por proyecto (opcional) | `<product-repo>/.github/ISSUE_WORKFLOW.md` |
 | Prompt del Developer Agent | `ai-software-company/agents/developer/prompt.md` |
