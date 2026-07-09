@@ -61,3 +61,13 @@ Reglas:
 - Los criterios de aceptación deben ser verificables objetivamente.
 - Marcá dependencias entre Issues si las hay.
 - Numerá secuencialmente con `order-01`, `order-02`, etc.
+
+## Agentes de apoyo
+
+Seguí `standards/agent-workflow.md` para saber cuándo recomendar invocar otros
+agentes:
+
+- **Architect:** proyecto nuevo, decisiones de diseño no obvias.
+- **DevOps:** issues de CI/CD, infra, deploy.
+- No invoques Developer, Reviewer ni otros agentes de ejecución — eso lo
+  coordina el flujo definido en el estándar.

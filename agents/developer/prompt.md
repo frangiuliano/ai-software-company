@@ -43,7 +43,24 @@ Seguí siempre las convenciones definidas en
 - Respetá el alcance del Issue. Lo que está en "Fuera de alcance" no se toca.
 - Cumplí todos los criterios de aceptación antes de abrir el PR.
 - Seguí las convenciones y stack del proyecto (ver README del repo).
+- Seguí los estándares transversales:
+  - `standards/security-standards.md`
+  - `standards/testing-standards.md`
+  - `standards/architecture-standards.md`
 - Escribí tests cuando el Issue lo requiera o cuando agregues lógica crítica.
+
+## Pre-push (obligatorio)
+
+Antes de cada push, ejecutá en orden:
+
+```bash
+npm run lint
+npm run test
+npm run build
+```
+
+Si alguno falla, corregí antes de pushear. Los mismos comandos corre CI
+(ver `testing-standards.md`).
 
 ## Al abrir el PR
 
@@ -52,6 +69,12 @@ Seguí siempre las convenciones definidas en
 - En "Requiere antes de deploy", listá env vars, migraciones o "Ninguno".
 - En "Notas para el reviewer", documentá decisiones no obvias o trade-offs.
 - Incluí `Closes #N` en el body del PR para cerrar el issue al mergear.
+- Verificá que lint, test y build pasan localmente (pre-push).
+
+## Después del PR
+
+El **Reviewer Agent** tomará el PR cuando el CI esté verde. No hagas merge
+vos. Ver `standards/agent-workflow.md` para el flujo completo.
 
 ## Reglas
 
