@@ -28,8 +28,9 @@ flowchart TD
     PrePush["lint + test + build"]
     PR["Pull Request"]
     CI["GitHub Actions CI"]
-    Rev["Reviewer"]
-    Merge["Merge a main"]
+    Rev["Reviewer Agent via Gemini"]
+    Human["Usuario revisa veredicto"]
+    Merge["Merge manual a main"]
 
     Idea --> PO
     PO -->|proyecto nuevo o decisión grande| Arch
@@ -41,8 +42,9 @@ flowchart TD
     PR --> CI
     CI -->|verde| Rev
     CI -->|rojo| Dev
-    Rev -->|aprobado| Merge
-    Rev -->|cambios| Dev
+    Rev -->|comentario en PR| Human
+    Human -->|aprobado / ok| Merge
+    Human -->|cambios| Dev
     Merge --> Issues
 ```
 
@@ -74,14 +76,15 @@ flowchart TD
 
 | Trigger | Acción |
 |---------|--------|
-| Issue de CI (#10) | Implementar workflow de GitHub Actions |
+| Issue de CI | Implementar workflow de GitHub Actions |
+| Issue de AI Review (`ai-review.yml`) | Asesorar espera de CI, secrets, permisos |
 | Necesidad de deploy/staging | Recomendar estrategia |
 | Problema de infra en PR/CI | Diagnosticar y recomendar fix |
 | Proyecto nuevo | Recomendar setup Docker, CI, env management |
 
 **Invocación:** manual — `@agents/devops/prompt.md`
-**En issues de CI**, el Developer implementa siguiendo recomendaciones de
-DevOps (el DevOps puede ser invocado antes para asesorar).
+**En issues de CI / AI Review**, el Developer implementa siguiendo recomendaciones
+de DevOps (el DevOps puede ser invocado antes para asesorar).
 
 ### Developer
 
@@ -97,13 +100,18 @@ DevOps (el DevOps puede ser invocado antes para asesorar).
 
 | Trigger | Acción |
 |---------|--------|
-| PR abierto hacia `main` | Revisar código, criterios, seguridad |
-| CI verde en el PR | Proceder con review |
-| CI rojo | Devolver al Developer (no revisar hasta CI verde) |
+| PR abierto/actualizado hacia `main` | Workflow `ai-review.yml` (GitHub Actions) |
+| CI verde en el PR | Proceder con review vía Gemini API |
+| CI rojo | No revisar (skip / wait) hasta CI verde |
+| Invocación manual en Cursor | Review profundo opcional con skills Bugbot + Security |
 
-**Invocación:** manual — `@agents/reviewer/prompt.md`
-**Trigger futuro automático:** Cursor Automation o GitHub webhook que invoque
-al Reviewer cuando se abre un PR (requiere configuración externa).
+**Invocación automática:** GitHub Actions + Gemini (`GEMINI_API_KEY_REVIEWER`),
+usando el prompt en `agents/reviewer/prompt.md`. Corre sin PC local encendida.
+**Sin auto-merge:** el usuario lee el veredicto y mergea a mano.
+
+**Invocación manual (opcional):** `@agents/reviewer/prompt.md` en Cursor cuando
+se quiera complementar con Bugbot / Security Review skills (no disponibles en
+Actions).
 
 ## Security y QA sin agente dedicado
 
@@ -111,8 +119,8 @@ al Reviewer cuando se abre un PR (requiere configuración externa).
 |-----------------|------------|
 | Reglas de seguridad | `standards/security-standards.md` |
 | Tests y quality gate | `standards/testing-standards.md` + CI |
-| Review de seguridad en PR | Reviewer (skill `review-security`) |
-| Review de bugs en PR | Reviewer (skill `review-bugbot`) |
+| Review de seguridad en PR | Reviewer automático (checklist) + opcional skill `review-security` en Cursor |
+| Review de bugs en PR | Opcional skill `review-bugbot` en Cursor |
 | Validación de criterios de aceptación | Reviewer (checklist del Issue) |
 
 ### Por qué no hay QA Agent separado
@@ -130,23 +138,28 @@ agregar un QA Agent. Por ahora, no aporta valor incremental.
 ### Por qué no hay Security Agent separado
 
 Security es transversal, no un paso del pipeline. Las reglas viven en el
-estándar; el Reviewer las aplica en cada PR con la skill `review-security`.
-Un Security Agent dedicado tendría sentido con auditorías periódicas o
-compliance formal — overkill para MVP.
+estándar; el Reviewer las aplica en cada PR. Un Security Agent dedicado tendría
+sentido con auditorías periódicas o compliance formal — overkill para MVP.
 
-## Automatización futura
+## API keys de Gemini (separación de cupos)
 
-Para que los agentes actúen sin invocación manual:
+El free tier de Gemini es por proyecto. Usar **dos proyectos** distintos:
 
-| Agente | Mecanismo posible |
-|--------|-------------------|
-| Developer | Cursor Automation: cron que invoque developer prompt |
-| Reviewer | GitHub webhook → Cursor Automation on PR opened |
-| DevOps | Alertas de CI fallido → invocar DevOps |
+| Secret / variable | Uso |
+|-------------------|-----|
+| `GEMINI_API_KEY_REVIEWER` | Solo CI / Reviewer Agent (`ai-review.yml`) |
+| `GEMINI_API_KEY_FINANCE` | Solo producto (análisis de noticias, etc.) |
+
+No compartir la misma key entre Reviewer y producto.
+
+## Automatización
+
+| Agente | Mecanismo |
+|--------|-----------|
+| Reviewer | GitHub Actions `ai-review.yml` → Gemini API (implementado en repos de producto) |
+| Developer | Manual vía `@agents/developer/prompt.md` (futuro: Cursor Automation) |
+| DevOps | Manual; alertas de CI fallido pueden invocarlo |
 | Architect | Invocación manual (decisiones puntuales) |
-
-Esto requiere [Cursor Automations](https://cursor.com) o integración custom.
-Por ahora, la invocación es manual vía `@agents/<rol>/prompt.md`.
 
 ## Dónde vive cada cosa
 
@@ -154,4 +167,5 @@ Por ahora, la invocación es manual vía `@agents/<rol>/prompt.md`.
 |-----|-------|
 | Flujo de agentes (este archivo) | `ai-software-company/standards/agent-workflow.md` |
 | Prompts de agentes | `ai-software-company/agents/<rol>/prompt.md` |
-| Skills de review | Cursor skills: `review-bugbot`, `review-security` |
+| Skills de review (Cursor, opcionales) | Cursor skills: `review-bugbot`, `review-security` |
+| Workflow de review automático | `<product-repo>/.github/workflows/ai-review.yml` |

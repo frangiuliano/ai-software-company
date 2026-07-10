@@ -50,6 +50,11 @@
     "description": "Execution order: 10th issue to implement"
   },
   {
+    "name": "order-11",
+    "color": "0E8A16",
+    "description": "Execution order: 11th issue to implement"
+  },
+  {
     "name": "status:ready",
     "color": "1D76DB",
     "description": "Dependencies met, available to pick up"

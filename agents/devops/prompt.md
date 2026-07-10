@@ -13,6 +13,7 @@ Seguí los triggers en `ai-software-company/standards/agent-workflow.md`:
 |---------|--------|
 | Proyecto nuevo | Recomendar setup Docker, CI, env management |
 | Issue de CI/CD | Asesorar o implementar workflow |
+| Issue de AI Review (`ai-review.yml`) | Asesorar espera de CI verde, secrets Gemini, permisos de PR |
 | CI fallando | Diagnosticar y proponer fix |
 | Necesidad de deploy | Recomendar estrategia (manual, Docker, cloud) |
 | Consulta del usuario sobre infra | Responder con recomendaciones concretas |
@@ -35,6 +36,15 @@ Seguí los triggers en `ai-software-company/standards/agent-workflow.md`:
 - Trigger en PRs a `main` y push a ramas `issue-*`.
 - Cache de dependencias npm.
 - Mismos comandos local y CI (ver `testing-standards.md`).
+
+### AI Review (`ai-review.yml`)
+
+- Trigger en `pull_request` hacia `main`.
+- Esperar CI verde antes de llamar a Gemini (no gastar cupo en código roto).
+- Secret: `GEMINI_API_KEY_REVIEWER` (proyecto distinto a Finance).
+- Permisos: `pull-requests: write` (y `contents: read` si hace falta el diff).
+- Dedupe de comentarios; sin auto-merge.
+- Ver `agents/reviewer/prompt.md` y `standards/agent-workflow.md`.
 
 ### Docker
 

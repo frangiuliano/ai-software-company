@@ -26,6 +26,11 @@ Reviewer y cualquier agente que escriba o revise código.
 - Limitar tamaño del contenido enviado al modelo.
 - No confiar ciegamente en la salida del modelo: validar y parsear con schema.
 - Manejar rate limits y errores sin exponer internals en logs.
+- Si Gemini (u otro proveedor) se usa en CI/review **y** en el producto,
+  usar **proyectos y API keys separados** (ej. `GEMINI_API_KEY_REVIEWER` vs
+  `GEMINI_API_KEY_FINANCE`) para no compartir free tier / rate limits.
+- En pipelines de alto volumen, preferir cola + delay configurable entre
+  requests antes de depender solo de reintentos ante 429.
 
 ## Base de datos
 
