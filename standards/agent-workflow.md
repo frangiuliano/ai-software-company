@@ -111,7 +111,8 @@ usando el prompt en `agents/reviewer/prompt.md`. Corre sin PC local encendida.
 
 **Invocación manual (opcional):** `/rev` (ej. `/rev 12`, `/rev siguiente`) o
 `@agents/reviewer/prompt.md` en Cursor cuando se quiera complementar con Bugbot /
-Security Review skills (no disponibles en Actions).
+Security Review skills (no disponibles en Actions). En ambos modos el veredicto
+se publica como **comentario en el PR** (no solo en el chat de Cursor).
 
 ## Security y QA sin agente dedicado
 

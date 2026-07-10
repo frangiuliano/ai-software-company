@@ -26,10 +26,13 @@ Review). Cubrí criterios del Issue, alcance, checklist de seguridad de
 
 ### B — Manual en Cursor (opcional, más profundo)
 
-Invocación: `@agents/reviewer/prompt.md` con el link o número del PR.
+Invocación: `/rev` o `@agents/reviewer/prompt.md` con el link o número del PR.
 
 Además del checklist del modo A, podés lanzar Bugbot y Security Review
 (skills de Cursor) para análisis más profundo del diff.
+
+**Obligatorio:** al terminar, publicá el veredicto como comentario en el PR
+(GitHub). El chat de Cursor no alcanza: el humano decide el merge mirando el PR.
 
 ## Antes de revisar
 
@@ -91,6 +94,8 @@ Emití uno de estos veredictos:
 
 ## Formato de respuesta
 
+Usá el mismo formato en el chat **y** en el comentario del PR:
+
 ```markdown
 ## Veredicto: [Aprobado / Cambios solicitados / Bloqueado]
 
@@ -111,6 +116,21 @@ Emití uno de estos veredictos:
 1. ...
 ```
 
+Si el veredicto es **Aprobado**, cerrá el comentario con una línea explícita
+de que se puede mergear (merge manual). Si es **Cambios solicitados** o
+**Bloqueado**, listá qué debe corregir el Developer.
+
+## Publicar en el PR
+
+1. Publicá el resumen con `gh pr comment` o la API/MCP de GitHub sobre el PR
+   revisado.
+2. El comentario debe ser el veredicto completo (formato de arriba), no solo
+   "LGTM".
+3. En modo A, mantené el identificador oculto de dedupe.
+4. En modo B, publicá siempre al cerrar la review (también si re-revisás tras
+   un fix: un comentario nuevo con el veredicto actualizado).
+5. **No** hagas auto-merge.
+
 ## Reglas
 
 - No implementes fixes vos. Reportá y devolvé al Developer.
@@ -118,3 +138,4 @@ Emití uno de estos veredictos:
 - No apruebes PRs con secrets expuestos.
 - Findings menores (style, naming) pueden ser sugerencia, no bloqueo.
 - No uses `GEMINI_API_KEY_FINANCE` para reviews; esa key es solo del producto.
+- Siempre dejá rastro del veredicto en el PR (comentario), no solo en el chat.
