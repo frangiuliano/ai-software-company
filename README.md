@@ -12,6 +12,7 @@ ai-software-company/
 │   ├── devops/          # Asesora sobre CI/CD, infra y deploy
 │   ├── developer/       # Implementa Issues en repos de producto
 │   └── reviewer/        # Revisa PRs antes del merge
+├── .cursor/commands/    # Slash commands (/dev, /rev, /po, /arch, /ops)
 ├── standards/
 │   ├── git-workflow.md          # Branches, commits y PRs
 │   ├── issue-workflow.md        # Labels y orden de ejecución
@@ -20,6 +21,7 @@ ai-software-company/
 │   ├── testing-standards.md     # Convenciones de testing y CI
 │   └── architecture-standards.md # Estructura de módulos y capas
 └── templates/
+    ├── cursor/                  # Slash commands para bootstrap
     └── github/
         ├── labels.json         # Labels estándar para bootstrap
         └── ISSUE_WORKFLOW.md   # Template de extensiones por proyecto
@@ -48,24 +50,38 @@ Detalle completo en [`standards/agent-workflow.md`](standards/agent-workflow.md)
 
 ## Agentes
 
-| Agente | Tipo | Invocación |
-|--------|------|------------|
-| Product Owner | Ejecución | `@agents/product-owner/prompt.md` |
-| Architect | Asesoría | `@agents/architect/prompt.md` |
-| DevOps | Asesoría | `@agents/devops/prompt.md` |
-| Developer | Ejecución | `@agents/developer/prompt.md` |
-| Reviewer | Gate | Automático vía `ai-review.yml` + Gemini; opcional `@agents/reviewer/prompt.md` en Cursor |
+| Agente | Tipo | Atajo | Prompt (fuente de verdad) |
+|--------|------|-------|---------------------------|
+| Product Owner | Ejecución | `/po` | `agents/product-owner/prompt.md` |
+| Architect | Asesoría | `/arch` | `agents/architect/prompt.md` |
+| DevOps | Asesoría | `/ops` | `agents/devops/prompt.md` |
+| Developer | Ejecución | `/dev` | `agents/developer/prompt.md` |
+| Reviewer | Gate | `/rev` (Cursor) o `ai-review.yml` (GHA) | `agents/reviewer/prompt.md` |
 
 Security y QA no tienen agente dedicado: viven en estándares + Reviewer + CI.
 
+### Slash commands
+
+En Agent chat, escribí `/` y elegí el comando. Ejemplos:
+
+- `/dev siguiente` — próximo issue hasta PR
+- `/dev 8` — issue #8 hasta PR
+- `/rev 12` — review del PR #12
+- `/po <idea>` — crear Issues
+- `/arch <pregunta>` — asesoría de diseño
+- `/ops <tema>` — CI / infra / AI Review
+
+Detalle de instalación: [`templates/cursor/README.md`](templates/cursor/README.md).
+
 ## Templates por repo de producto
 
-Al crear un repo de producto, copiá desde `templates/github/`:
+Al crear un repo de producto, copiá:
 
-| Archivo | Destino en el repo de producto |
-|---------|-------------------------------|
-| `ISSUE_WORKFLOW.md` | `.github/ISSUE_WORKFLOW.md` |
-| `labels.json` | Usar para crear labels en GitHub (ver `issue-workflow.md`) |
+| Origen | Destino en el repo de producto |
+|--------|-------------------------------|
+| `templates/github/ISSUE_WORKFLOW.md` | `.github/ISSUE_WORKFLOW.md` |
+| `templates/github/labels.json` | Usar para crear labels en GitHub (ver `issue-workflow.md`) |
+| `templates/cursor/commands/*.md` | `.cursor/commands/` |
 
 El PR template (`.github/PULL_REQUEST_TEMPLATE.md`) también vive en cada repo
 de producto porque GitHub lo requiere ahí.

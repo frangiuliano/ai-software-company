@@ -58,7 +58,7 @@ flowchart TD
 | Backlog desordenado | Reordenar labels `order-NN` |
 | Issue completado (cerrado) | Verificar que el siguiente esté desbloqueado |
 
-**Invocación:** manual — `@agents/product-owner/prompt.md`
+**Invocación:** `/po` (slash command) o `@agents/product-owner/prompt.md`
 
 ### Architect
 
@@ -69,7 +69,7 @@ flowchart TD
 | Decisión no obvia (ORM, patrón async) | Asesorar, documentar ADR |
 | PR con cambio estructural cross-cutting | Revisar impacto arquitectónico |
 
-**Invocación:** manual — `@agents/architect/prompt.md`
+**Invocación:** `/arch` o `@agents/architect/prompt.md`
 **No corre automáticamente en cada issue.** Se invoca en los triggers de arriba.
 
 ### DevOps
@@ -82,7 +82,7 @@ flowchart TD
 | Problema de infra en PR/CI | Diagnosticar y recomendar fix |
 | Proyecto nuevo | Recomendar setup Docker, CI, env management |
 
-**Invocación:** manual — `@agents/devops/prompt.md`
+**Invocación:** `/ops` o `@agents/devops/prompt.md`
 **En issues de CI / AI Review**, el Developer implementa siguiendo recomendaciones
 de DevOps (el DevOps puede ser invocado antes para asesorar).
 
@@ -93,7 +93,7 @@ de DevOps (el DevOps puede ser invocado antes para asesorar).
 | Issue con `order-NN` disponible y dependencias cerradas | Tomar issue, implementar |
 | Reviewer pide cambios | Corregir y re-push |
 
-**Invocación:** manual — `@agents/developer/prompt.md`
+**Invocación:** `/dev` (ej. `/dev siguiente`, `/dev 8`) o `@agents/developer/prompt.md`
 **Selección automática de issue:** algoritmo en `issue-workflow.md`.
 
 ### Reviewer
@@ -109,9 +109,9 @@ de DevOps (el DevOps puede ser invocado antes para asesorar).
 usando el prompt en `agents/reviewer/prompt.md`. Corre sin PC local encendida.
 **Sin auto-merge:** el usuario lee el veredicto y mergea a mano.
 
-**Invocación manual (opcional):** `@agents/reviewer/prompt.md` en Cursor cuando
-se quiera complementar con Bugbot / Security Review skills (no disponibles en
-Actions).
+**Invocación manual (opcional):** `/rev` (ej. `/rev 12`, `/rev siguiente`) o
+`@agents/reviewer/prompt.md` en Cursor cuando se quiera complementar con Bugbot /
+Security Review skills (no disponibles en Actions).
 
 ## Security y QA sin agente dedicado
 
@@ -167,5 +167,6 @@ No compartir la misma key entre Reviewer y producto.
 |-----|-------|
 | Flujo de agentes (este archivo) | `ai-software-company/standards/agent-workflow.md` |
 | Prompts de agentes | `ai-software-company/agents/<rol>/prompt.md` |
+| Slash commands (atajos) | `ai-software-company/.cursor/commands/` y `templates/cursor/commands/` |
 | Skills de review (Cursor, opcionales) | Cursor skills: `review-bugbot`, `review-security` |
 | Workflow de review automático | `<product-repo>/.github/workflows/ai-review.yml` |
