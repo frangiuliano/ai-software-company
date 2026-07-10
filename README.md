@@ -30,7 +30,7 @@ ai-software-company/
 ## Flujo del equipo
 
 ```
-PO → (Architect si aplica) → Issues → Developer → PR → CI → AI Review (Gemini) → Merge manual
+PO → (Architect si aplica) → Issues → Developer → PR → CI → Review (/rev o AI Review opt-in) → Merge manual
          ↑                              ↑
        DevOps (CI/infra)            DevOps (si CI falla)
 ```
@@ -56,7 +56,7 @@ Detalle completo en [`standards/agent-workflow.md`](standards/agent-workflow.md)
 | Architect | Asesoría | `/arch` | `agents/architect/prompt.md` |
 | DevOps | Asesoría | `/ops` | `agents/devops/prompt.md` |
 | Developer | Ejecución | `/dev` | `agents/developer/prompt.md` |
-| Reviewer | Gate | `/rev` (Cursor) o `ai-review.yml` (GHA) | `agents/reviewer/prompt.md` |
+| Reviewer | Gate | `/rev` (default) o `ai-review.yml` (opt-in) | `agents/reviewer/prompt.md` |
 
 Security y QA no tienen agente dedicado: viven en estándares + Reviewer + CI.
 

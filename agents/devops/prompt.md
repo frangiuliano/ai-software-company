@@ -40,8 +40,11 @@ Seguí los triggers en `ai-software-company/standards/agent-workflow.md`:
 ### AI Review (`ai-review.yml`)
 
 - Trigger en `pull_request` hacia `main`.
+- **Opt-in:** variable de repo `AI_REVIEW_ENABLED=true` (si está ausente o
+  distinta de `true`, el job se skipea; el camino por defecto es `/rev`).
 - Esperar CI verde antes de llamar a Gemini (no gastar cupo en código roto).
-- Secret: `GEMINI_API_KEY_REVIEWER` (proyecto distinto a Finance).
+- Secret: `GEMINI_API_KEY_REVIEWER` (proyecto distinto a Finance) — solo
+  necesario con el review automático encendido.
 - Permisos: `pull-requests: write` (y `contents: read` si hace falta el diff).
 - Dedupe de comentarios; sin auto-merge.
 - Ver `agents/reviewer/prompt.md` y `standards/agent-workflow.md`.

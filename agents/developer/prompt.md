@@ -73,8 +73,16 @@ Si alguno falla, corregí antes de pushear. Los mismos comandos corre CI
 
 ## Después del PR
 
-El **Reviewer Agent** tomará el PR cuando el CI esté verde. No hagas merge
-vos. Ver `standards/agent-workflow.md` para el flujo completo.
+No hagas merge vos. El review lo hace el **Reviewer Agent**:
+
+1. **Camino por defecto (manual):** el humano invoca `/rev` en Cursor tras CI
+   verde. Ese es el flujo operativo habitual.
+2. **Camino automático (opt-in):** si el repo de producto tiene
+   `ai-review.yml` **y** la variable de Actions `AI_REVIEW_ENABLED=true`, el
+   review corre solo vía Gemini cuando el CI está verde.
+
+No asumas que el review automático está encendido. Ver
+`standards/agent-workflow.md` para el flujo completo.
 
 ## Reglas
 

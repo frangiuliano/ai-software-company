@@ -100,19 +100,21 @@ de DevOps (el DevOps puede ser invocado antes para asesorar).
 
 | Trigger | Acción |
 |---------|--------|
-| PR abierto/actualizado hacia `main` | Workflow `ai-review.yml` (GitHub Actions) |
-| CI verde en el PR | Proceder con review vía Gemini API |
-| CI rojo | No revisar (skip / wait) hasta CI verde |
-| Invocación manual en Cursor | Review profundo opcional con skills Bugbot + Security |
+| Invocación manual en Cursor (`/rev`) | **Camino por defecto** — review + comentario en el PR (opcionalmente Bugbot / Security) |
+| PR abierto/actualizado hacia `main` + `AI_REVIEW_ENABLED=true` | Workflow `ai-review.yml` (GitHub Actions) |
+| CI verde en el PR (solo si automático on) | Proceder con review vía Gemini API |
+| CI rojo o `AI_REVIEW_ENABLED` ≠ `true` | No revisar en Actions (skip) |
 
-**Invocación automática:** GitHub Actions + Gemini (`GEMINI_API_KEY_REVIEWER`),
-usando el prompt en `agents/reviewer/prompt.md`. Corre sin PC local encendida.
+**Invocación manual (default):** `/rev` (ej. `/rev 12`, `/rev siguiente`) o
+`@agents/reviewer/prompt.md` en Cursor. Puede usar skills Bugbot / Security
+Review. El veredicto se publica como **comentario en el PR** (no solo en el
+chat de Cursor).
+
+**Invocación automática (opt-in):** GitHub Actions + Gemini
+(`GEMINI_API_KEY_REVIEWER`), usando el prompt en `agents/reviewer/prompt.md`
+(o la copia en el repo de producto). Requiere variable de repo
+`AI_REVIEW_ENABLED=true`. Si está apagada o ausente, el job se skipea.
 **Sin auto-merge:** el usuario lee el veredicto y mergea a mano.
-
-**Invocación manual (opcional):** `/rev` (ej. `/rev 12`, `/rev siguiente`) o
-`@agents/reviewer/prompt.md` en Cursor cuando se quiera complementar con Bugbot /
-Security Review skills (no disponibles en Actions). En ambos modos el veredicto
-se publica como **comentario en el PR** (no solo en el chat de Cursor).
 
 ## Security y QA sin agente dedicado
 
@@ -157,7 +159,7 @@ No compartir la misma key entre Reviewer y producto.
 
 | Agente | Mecanismo |
 |--------|-----------|
-| Reviewer | GitHub Actions `ai-review.yml` → Gemini API (implementado en repos de producto) |
+| Reviewer | Default: `/rev` en Cursor. Opt-in: `ai-review.yml` + `AI_REVIEW_ENABLED=true` → Gemini |
 | Developer | Manual vía `@agents/developer/prompt.md` (futuro: Cursor Automation) |
 | DevOps | Manual; alertas de CI fallido pueden invocarlo |
 | Architect | Invocación manual (decisiones puntuales) |
