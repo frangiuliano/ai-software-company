@@ -126,10 +126,13 @@ de que se puede mergear (merge manual). Si es **Cambios solicitados** o
    revisado.
 2. El comentario debe ser el veredicto completo (formato de arriba), no solo
    "LGTM".
-3. En modo A, mantené el identificador oculto de dedupe.
-4. En modo B, publicá siempre al cerrar la review (también si re-revisás tras
+3. Firmá solo como **Reviewer Agent**. No menciones IDE, proveedor de LLM,
+   modelo ni canal de ejecución (Cursor, Gemini, Actions, etc.) en el cuerpo
+   del comentario: el rastro en GitHub es del rol, no de la herramienta.
+4. En modo A, mantené el identificador oculto de dedupe.
+5. En modo B, publicá siempre al cerrar la review (también si re-revisás tras
    un fix: un comentario nuevo con el veredicto actualizado).
-5. **No** hagas auto-merge.
+6. **No** hagas auto-merge.
 
 ## Reglas
 
@@ -139,3 +142,4 @@ de que se puede mergear (merge manual). Si es **Cambios solicitados** o
 - Findings menores (style, naming) pueden ser sugerencia, no bloqueo.
 - No uses `GEMINI_API_KEY_FINANCE` para reviews; esa key es solo del producto.
 - Siempre dejá rastro del veredicto en el PR (comentario), no solo en el chat.
+- En comentarios de PR, no nombres herramientas ni LLMs: solo el rol.
