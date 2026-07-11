@@ -54,12 +54,28 @@ Seguí siempre las convenciones definidas en
 Antes de cada push, ejecutá en orden:
 
 ```bash
+npm run verify:lockfile
 npm run lint
 npm run test
 npm run build
 ```
 
-Si alguno falla, corregí antes de pushear. Los mismos comandos corre CI
+`verify:lockfile` corre `npm ci` en Linux (Docker `node:22`) sobre una copia
+limpia de `package.json` + `package-lock.json`. **No alcanza** con `npm ci`
+local en macOS: el lockfile puede instalarse bien en Darwin y fallar en
+GitHub Actions por deps opcionales de plataforma (p. ej. `@emnapi/*`).
+
+Si cambiaste dependencias y `verify:lockfile` falla:
+
+```bash
+# Regenerar lockfile de forma compatible con Linux CI
+docker run --rm -v "$PWD:/app" -w /app node:22-bookworm-slim \
+  npm install --package-lock-only --ignore-scripts
+npm run verify:lockfile
+```
+
+Si alguno de los pasos falla, corregí antes de pushear. Los mismos comandos
+(salvo el verify, que CI reemplaza con su propio `npm ci`) corre CI
 (ver `testing-standards.md`).
 
 ## Al abrir el PR

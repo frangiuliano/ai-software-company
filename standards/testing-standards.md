@@ -42,9 +42,31 @@ Estos scripts deben coincidir entre **local pre-push** y **CI**.
 Antes de cada push, ejecutar en orden:
 
 ```bash
+npm run verify:lockfile   # Linux npm ci via Docker (catch lockfile drift)
 npm run lint
 npm run test
 npm run build
+```
+
+### Por qué `verify:lockfile`
+
+GitHub Actions corre en Linux. Un `package-lock.json` generado o tocado en
+macOS puede pasar `npm ci` localmente y fallar en CI con errores del estilo:
+
+```text
+npm error Missing: @emnapi/core@x.y.z from lock file
+```
+
+Eso rompe el stage **Install dependencies** antes de lint/test/build. El
+script `verify:lockfile` reproduce `npm ci` en `node:22` Linux sobre una
+copia limpia del lockfile (sin montar `node_modules` del host).
+
+Si falla tras cambiar deps:
+
+```bash
+docker run --rm -v "$PWD:/app" -w /app node:22-bookworm-slim \
+  npm install --package-lock-only --ignore-scripts
+npm run verify:lockfile
 ```
 
 Si alguno falla, no pushear. Corregir primero.
