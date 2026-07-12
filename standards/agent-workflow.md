@@ -9,6 +9,7 @@ cada transición. Es agnóstico al proyecto.
 |--------|------|-----|
 | Product Owner | Ejecución | Crea y prioriza Issues |
 | Architect | Asesoría | Decisiones de diseño e infraestructura |
+| Finance Advisor | Asesoría | Criterio de dominio: alertas, features de research, priorización inversor |
 | DevOps | Asesoría | CI/CD, deploy, infra, recomendaciones |
 | Developer | Ejecución | Implementa Issues hasta PR |
 | Reviewer | Gate | Revisa PRs antes del merge |
@@ -22,6 +23,7 @@ embebidas en estándares + Reviewer + CI.
 flowchart TD
     Idea["Idea / requerimiento"]
     PO["Product Owner"]
+    Fin["Finance Advisor (si aplica)"]
     Arch["Architect (si aplica)"]
     Issues["Issues en GitHub"]
     Dev["Developer"]
@@ -32,6 +34,8 @@ flowchart TD
     Human["Usuario revisa veredicto"]
     Merge["Merge manual a main"]
 
+    Idea --> Fin
+    Fin -->|recomendaciones de dominio| PO
     Idea --> PO
     PO -->|proyecto nuevo o decisión grande| Arch
     Arch -->|recomendaciones| PO
@@ -59,6 +63,19 @@ flowchart TD
 | Issue completado (cerrado) | Verificar que el siguiente esté desbloqueado |
 
 **Invocación:** `/po` (slash command) o `@agents/product-owner/prompt.md`
+
+### Finance Advisor
+
+| Trigger | Acción |
+|---------|--------|
+| Consulta sobre features de research / alertas | Recomendar qué agregar, cambiar o descartar |
+| Revisión de reglas de relevancia | Decir cuándo alertar vs no |
+| Priorización de ideas de producto financiero | Opinar valor para inversor retail |
+| Idea de trading / señales buy-sell | Acotar o rechazar si choca con la visión |
+
+**Invocación:** `/fin` o `@agents/finance-advisor/prompt.md`
+**No crea Issues ni código.** Si el outcome es backlog, el usuario invoca `/po`.
+**Disclaimer:** criterio de diseño de producto, no asesoramiento financiero.
 
 ### Architect
 
@@ -163,6 +180,7 @@ No compartir la misma key entre Reviewer y producto.
 | Developer | Manual vía `@agents/developer/prompt.md` (futuro: Cursor Automation) |
 | DevOps | Manual; alertas de CI fallido pueden invocarlo |
 | Architect | Invocación manual (decisiones puntuales) |
+| Finance Advisor | Invocación manual (`/fin`) para dominio / alertas / features |
 
 ## Dónde vive cada cosa
 
