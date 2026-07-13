@@ -28,6 +28,12 @@ agregando cosas no pedidas).
 - [ ] Criterio verificable 3
 (Deben ser chequeables objetivamente, no "que funcione bien")
 
+## Cómo validar en local
+Pasos concretos (comandos, env vars, URLs o scripts) con los que un humano
+o el Developer puede verificar los criterios **sin** depender solo del CI.
+Ejemplos: `npm run …`, `curl …`, editar `.env` y reiniciar, resultado
+esperado. Si aún no hay stack, indicá "Tras scaffold: …".
+
 ## Dependencias
 Issues o componentes que deben existir antes de esto (si aplica)
 
@@ -59,8 +65,16 @@ Reglas:
 - Cada Issue debe ser implementable en 1-3 días de trabajo por un
   desarrollador.
 - Los criterios de aceptación deben ser verificables objetivamente.
+- Incluí siempre **Cómo validar en local** con pasos accionables (no
+  genéricos tipo "probar que funcione").
 - Marcá dependencias entre Issues si las hay.
 - Numerá secuencialmente con `order-01`, `order-02`, etc.
+
+## Resumen en el chat (obligatorio)
+
+Al terminar de crear/actualizar Issues, listá cada uno con número/título y
+repití (o condensá) los pasos de **Cómo validar en local** del body, para
+que el humano no tenga que abrir cada Issue solo para saber cómo probarlo.
 
 ## Agentes de apoyo
 

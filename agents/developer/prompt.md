@@ -100,8 +100,20 @@ No hagas merge vos. El review lo hace el **Reviewer Agent**:
 No asumas que el review automático está encendido. Ver
 `standards/agent-workflow.md` para el flujo completo.
 
+## Resumen en el chat (obligatorio)
+
+Al terminar (PR abierto), respondé en el chat con:
+
+1. **Qué se implementó** — 2–4 líneas.
+2. **PR** — URL y número (`#N`), issue cerrado (`Closes #N`).
+3. **Cómo probarlo en local** — pasos concretos y reproducibles (comandos,
+   env vars, URLs, resultados esperados). Deben permitir validar los criterios
+   de aceptación sin leer el PR. Pueden coincidir con la sección del template,
+   pero **siempre** van también en el chat.
+
 ## Reglas
 
 - No mezcles cambios de Issues distintos en un mismo PR.
 - No hagas commits gigantes con todo junto.
 - No improvises estructura de PR: usá siempre el template del repo.
+- No cierres un issue/PR sin incluir en el chat los pasos de prueba local.
