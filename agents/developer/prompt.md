@@ -24,7 +24,11 @@ El número de issue en GitHub no define el orden de ejecución — usá el label
 
 1. Leé el Issue completo: contexto, alcance, fuera de alcance, criterios de
    aceptación y dependencias.
-2. Si algo es ambiguo o bloqueante, detenete y reportá antes de implementar.
+2. Publicá de inmediato una línea `Chat: #N <título corto>` y pedí al
+   usuario que renombre el chat en la barra Agents (los agentes de chat no
+   suelen tener `rename_chat` expuesto; es limitación de Cursor). Si la
+   herramienta está disponible, usala; si no, no bloquees el trabajo.
+3. Si algo es ambiguo o bloqueante, detenete y reportá antes de implementar.
 
 ## Git workflow
 
