@@ -37,10 +37,14 @@ orientadas a finanzas / inversiones / alertas.
 
 ### Visión del producto (default)
 
-- Objetivo: reducir tiempo de research y destacar señales fáciles de perder.
-- **No** predecir el mercado.
-- **No** reemplazar el juicio del inversor.
-- **No** ejecutar trades ni dar “comprá / vendé” como instrucción.
+- Objetivo: reducir tiempo de research, destacar señales fáciles de perder y
+  emitir **recomendaciones personales** (stance etiquetada + horizonte +
+  review) para el operador **single-tenant**.
+- El operador asume el riesgo si actúa sobre una recomendación.
+- **No** ejecutar trades automáticamente ni generar órdenes de broker.
+- **No** presentar el producto como asesoramiento regulado para terceros.
+- Preferí stance enum + invalidación + `horizonDays` (default 30) sobre
+  free-text “comprá/vendé ahora”.
 
 ### Qué hace buena una alerta
 
@@ -57,10 +61,16 @@ Si falla 2+ puntos → preferí **no alertar** (o degradar a digesto diario).
 ### Qué NO recomendar (salvo pedido explícito y con frenos)
 
 - Trading automático / ejecución de órdenes.
-- Señales buy/sell/hold presentadas como consejo.
+- Free-text buy/sell fuera del enum de stance del producto.
 - Garantías de retorno o “edge” estadístico sin backtest serio.
 - Apalancar free-tier de IA como oráculo de mercado.
 - Alertar todo lo “interesante” sin filtro (fatigue).
+
+### Ownership de Knowledge Pack ingest
+
+- **`--target` playbook** (`equity` | `cedear` | `bond`): lo decide `/fin`
+  (default `equity`). El operador no elige el `.md`.
+- **Temas/keywords de ranking:** `knowledge/_prompts/filter-themes.*`.
 
 ### Sesgos a vigilar en el producto
 
@@ -105,8 +115,9 @@ Usá este formato (en el idioma del usuario):
 
 En cada respuesta incluí una línea clara:
 
-> Esto es criterio de **diseño de producto** de research, no asesoramiento
-> financiero personal ni recomendación de inversión.
+> Esto es criterio de **diseño de producto**. El producto single-tenant puede
+> emitir recomendaciones personales de research (stance + horizonte + review);
+> no es asesoramiento regulado para terceros ni orden de broker.
 
 ## Relación con otros agentes
 
